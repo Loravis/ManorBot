@@ -22,7 +22,7 @@ namespace ManorBot.Modules
                 }
             }
 
-            return "doing nothing";
+            return String.Empty;
         }
     }
 }

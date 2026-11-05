@@ -15,6 +15,9 @@ namespace ManorBot.Handlers
             long startTime = Stopwatch.GetTimestamp();
 
             string workDescription = await MessageResponses.Respond(msg);
+            
+            if (workDescription == String.Empty)
+                return;
 
             TimeSpan elapsedTime = Stopwatch.GetElapsedTime(startTime);
             int time = elapsedTime.Microseconds;
