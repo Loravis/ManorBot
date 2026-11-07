@@ -1,36 +1,23 @@
 ﻿using Discord.WebSocket;
 using System.Diagnostics;
 using ManorBot.Modules;
+using ManorBot.Diagnostics;
 
 namespace ManorBot.Handlers
 {
-    internal class MsgHandler()
+    internal class MsgHandler(TaskTimer timer)
     {
         private readonly Logger logger = new("MsgHandler");
         public async Task HandleAsync(SocketMessage msg)
         {
-            if (msg is not SocketUserMessage)
-                return;
+            if (msg is not SocketUserMessage) return;
 
-            long startTime = Stopwatch.GetTimestamp();
+            timer.Start();
 
             string workDescription = await MessageResponses.Respond(msg);
-            
-            if (workDescription == String.Empty)
-                return;
+            if (string.IsNullOrEmpty(workDescription)) return;
 
-            TimeSpan elapsedTime = Stopwatch.GetElapsedTime(startTime);
-            int time = elapsedTime.Microseconds;
-
-            if (time > 999)
-            {
-                await logger.Log($"Finished {workDescription} in {time / 1000}ms");
-            }
-
-            else
-            {
-                await logger.Log($"Finished {workDescription} in {time}µs");
-            }
+            await timer.Stop(workDescription);
         }
     }
 }

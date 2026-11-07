@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.WebSocket;
+using ManorBot.Diagnostics;
 using ManorBot.Handlers;
 using ManorBot.Setup;
 
@@ -11,6 +12,7 @@ var botName = Environment.GetEnvironmentVariable("BOT_NAME");
 botName ??= "Bot";
 
 var botLogger = new Logger(botName);
+var timer = new TaskTimer(botLogger);
 
 if (token == null)
 {
@@ -24,7 +26,8 @@ var config = new DiscordSocketConfig
 };
 
 var client = new DiscordSocketClient(config);
-var msgHandler = new MsgHandler();
+var msgHandler = new MsgHandler(timer);
+
 client.Log += Logger.Log;
 client.MessageReceived += msgHandler.HandleAsync;
 
