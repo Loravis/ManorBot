@@ -1,6 +1,4 @@
 ﻿using Discord.WebSocket;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
 
 namespace ManorBot.Modules
 {

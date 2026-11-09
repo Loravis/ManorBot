@@ -7,7 +7,6 @@ namespace ManorBot.Handlers
 {
     internal class MsgHandler(TaskTimer timer)
     {
-        private readonly Logger logger = new("MsgHandler");
         public async Task HandleAsync(SocketMessage msg)
         {
             if (msg is not SocketUserMessage) return;
