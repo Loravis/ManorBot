@@ -3,26 +3,39 @@ using System.Diagnostics;
 
 namespace ManorBot.Diagnostics
 {
-    /* This class handles getting the time 
-     * it takes to complete various tasks. 
-     * It prevents violating the single-responsibility
-     * principle by having each class handle time 
-     * stopping on its own. 
-     * 
-     * See Diagrams/Stopwatch_abstraction.png for 
-     * a rundown of this class' relationships */
+    /// <summary>
+    /// Handles timing measurements for various bot tasks.
+    /// This class prevents violation of the single-responsibility principle
+    /// by centralizing performance profiling instead of having each class handle timing independently.
+    /// </summary>
+    /// <remarks>
+    /// See Diagrams/Stopwatch_abstraction.png for a detailed overview of this class's relationships and design.
+    /// </remarks>
     internal class TaskTimer(Logger logger)
     {
-        long startTime = 0;
+        /// <summary>
+        /// The timestamp when the current task started, in high-resolution ticks.
+        /// </summary>
+        private long _startTime = 0;
 
+        /// <summary>
+        /// Marks the start of a task timer measurement.
+        /// </summary>
         public void Start()
         {
-            startTime = Stopwatch.GetTimestamp();
+            _startTime = Stopwatch.GetTimestamp();
         }
 
+        /// <summary>
+        /// Records the elapsed time since <see cref="Start"/> was called and logs the result.
+        /// Automatically formats the output as milliseconds for times greater than 999 microseconds,
+        /// otherwise displays in microseconds.
+        /// </summary>
+        /// <param name="workDescription">A description of the work completed, used in the log message.</param>
+        /// <returns>A task representing the asynchronous logging operation.</returns>
         public async Task Stop(string workDescription)
         {
-            TimeSpan elapsedTime = Stopwatch.GetElapsedTime(startTime);
+            TimeSpan elapsedTime = Stopwatch.GetElapsedTime(_startTime);
             int time = elapsedTime.Microseconds;
 
             if (time > 999)

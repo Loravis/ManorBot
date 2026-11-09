@@ -2,22 +2,28 @@
 
 namespace ManorBot.Setup
 {
+    /// <summary>
+    /// Utility class for parsing environment variables from a .env file in the user's profile directory.
+    /// </summary>
+    /// <remarks>
+    /// This class reads from %UserProfile%/.env if it exists and parses environment variables.
+    /// Only string values formatted as VARIABLE="VALUE" are recognized.
+    /// Non-string values or incorrectly formatted lines are ignored.
+    /// </remarks>
     internal class EnvParse
-    { 
-        /* This method parses environment variables found in %UserProfile%/.env,
-         * if that file exists.
-         * 
-         * Returns: True if variables have been parsed, False if otherwise. 
-         * Throws:  Exception if %UserProfile% does not exist. 
-         * 
-         * Only string values can be parsed, non-string values are ignored.
-         * String values must be formatted as follows: VARIABLE="VALUE".
-         * 
-         * It is appropriate to raise an exception in the scenario 
-         * of %UserProfile% not existing, because this would be
-         * an exceptional case that shouldn't occur often and 
-         * usually indicates that something is wrong with the 
-         * host system (or the code). */
+    {
+        /// <summary>
+        /// Parses environment variables from a .env file located in the user's home directory (%UserProfile%/.env).
+        /// Environment variables must be formatted as follows: VARIABLE="VALUE".
+        /// </summary>
+        /// <returns>
+        /// True if at least one variable was successfully parsed from the .env file.
+        /// False if the .env file does not exist.
+        /// </returns>
+        /// <exception cref="Exception">
+        /// Thrown if the user profile directory (%UserProfile%) cannot be determined.
+        /// This indicates an exceptional system state that should not occur in normal operation.
+        /// </exception>
         public static bool Parse()
         {
             var path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
