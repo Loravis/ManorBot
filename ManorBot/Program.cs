@@ -26,7 +26,7 @@ var config = new DiscordSocketConfig
 };
 
 var client = new DiscordSocketClient(config);
-var msgHandler = new MsgHandler(timer);
+var msgHandler = new MsgHandler(timer, botLogger);
 
 client.Log += Logger.Log;
 client.MessageReceived += msgHandler.HandleAsync;

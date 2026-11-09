@@ -12,8 +12,10 @@ namespace ManorBot.Handlers
     /// Do not use this class to implement commands!
     /// Implement slash commands instead and implement them in a separate class.
     /// </remarks>
-    internal class MsgHandler(TaskTimer timer)
+    internal class MsgHandler(TaskTimer timer, Logger logger)
     {
+        private readonly MessageResponses messageResponses = new(logger);
+
         /// <summary>
         /// Processes a Discord message. All methods used to track sent messages should be called here.
         /// This method should only be called by the MessageReceived event unless there's another reason to call it,
@@ -27,7 +29,7 @@ namespace ManorBot.Handlers
 
             timer.Start();
 
-            string workDescription = await MessageResponses.Respond(msg);
+            string workDescription = await messageResponses.Respond(msg);
             if (string.IsNullOrEmpty(workDescription)) return;
 
             await timer.Stop(workDescription);

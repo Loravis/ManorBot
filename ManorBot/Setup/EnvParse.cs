@@ -33,14 +33,10 @@ namespace ManorBot.Setup
 
             path = Path.Combine(path, ".env");
 
-            string[] lines;
-            try
-            {
-                lines = File.ReadAllLines(path);
-            } catch (FileNotFoundException)
-            {
+            if (!File.Exists(path))
                 return false;
-            }
+
+            string[] lines = File.ReadAllLines(path);
 
             bool parsed = false;
             foreach (var line in lines)
