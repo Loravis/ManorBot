@@ -36,7 +36,7 @@ namespace ManorBot.Modules
                 }
             }
 
-            return String.Empty;
+            return string.Empty;
         }
     }
 }

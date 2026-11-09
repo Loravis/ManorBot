@@ -36,7 +36,7 @@ namespace ManorBot.Diagnostics
         public async Task Stop(string workDescription)
         {
             TimeSpan elapsedTime = Stopwatch.GetElapsedTime(_startTime);
-            int time = elapsedTime.Microseconds;
+            long time = (long)elapsedTime.TotalMicroseconds;
 
             if (time > 999)
             {
