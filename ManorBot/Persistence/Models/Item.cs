@@ -6,10 +6,20 @@
      * Each user may own an undefined number of items. 
      * 
      * This class is a child of the User class. 
+     * If the user is deleted, all of their items will be deleted as well.
+     * In SQL, this would be achieved using ON DELETE CASCADE. 
      * </summary>
      */
-    internal class Item
+    public class Item
     {
+        public Item(long id, long userId, string itemId, int count)
+        {
+            Id = id;
+            UserId = userId;
+            ItemId = itemId;
+            Count = count;
+        }
+
         /// <summary>
         /// This property represents the unique primary key
         /// of the item in the database. 
@@ -27,7 +37,7 @@
         /// This is a human-readable, unique identifier 
         /// of the item. It is defined within a configuration file. 
         /// </summary>
-        public required string ItemId { get; set; }
+        public string ItemId { get; set; }
 
         /// <summary>
         /// Represents the number of copies a particular user 

@@ -2,8 +2,9 @@
 
 namespace ManorBot.Persistence.Daos
 {
-    internal interface IDao
+    public interface IDao : IDisposable
     {
+
         /// <summary>
         /// Get a user from the database by their Discord user ID.
         /// </summary>
@@ -37,8 +38,12 @@ namespace ManorBot.Persistence.Daos
         /// the count of the item will be incremented 
         /// by the count of the new item.
         /// </summary>
+        /// <returns>
+        /// True if the operation was successful,
+        /// False if the user does not exist in the database.
+        /// </returns>
         /// <param name="item"></param>
-        public void AddItem(Item item);
+        public bool AddItem(Item item);
 
         /// <summary>
         /// Delete an item from the database. 
@@ -49,7 +54,11 @@ namespace ManorBot.Persistence.Daos
         /// it is removed from the database table. 
         /// </summary>
         /// <param name="item"></param>
-        public void DeleteItem(Item item);
+        /// <returns>
+        /// True if the operation was successful,
+        /// False if the item does not exist in the database. 
+        /// </returns>
+        public bool DeleteItem(Item item);
 
         /// <summary>
         /// Get a list of all items a user owns. 

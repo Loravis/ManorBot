@@ -5,8 +5,16 @@
      * Represents a bot user.
      * </summary>
      */
-    internal class User
+    public class User
     {
+        public User(long id, long totalXp, long periodXp, int level)
+        {
+            Id = id;
+            TotalXp = totalXp;
+            PeriodXp = periodXp;
+            Level = level;
+        }
+
         /// <summary>
         /// Represents the user's user ID, 
         /// as provided by the Discord API. 
