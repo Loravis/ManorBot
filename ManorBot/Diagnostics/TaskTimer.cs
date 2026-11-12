@@ -31,7 +31,9 @@ namespace ManorBot.Diagnostics
         /// Automatically formats the output as milliseconds for times greater than 999 microseconds,
         /// otherwise displays in microseconds.
         /// </summary>
-        /// <param name="workDescription">A description of the work completed, used in the log message.</param>
+        /// <param name="workDescription">a description of the work completed, used in the log message.
+        /// The description should ideally be a gerund verb followed (optionally) by a noun. For example;
+        /// "doing something" or "processing".</param>
         /// <returns>A task representing the asynchronous logging operation.</returns>
         public async Task Stop(string workDescription)
         {
