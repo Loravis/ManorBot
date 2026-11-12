@@ -30,7 +30,7 @@ var config = new DiscordSocketConfig
 
 var client = new DiscordSocketClient(config);
 
-var inHandler = new InteractionHandler(client, guildId);
+var inHandler = new InteractionHandler(timer, client, guildId);
 var msgHandler = new MsgHandler(timer, botLogger);
 
 client.Log += Logger.Log;

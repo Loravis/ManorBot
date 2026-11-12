@@ -1,6 +1,7 @@
 ﻿using Discord.Interactions;
 using Discord.WebSocket;
 using System.Reflection;
+using ManorBot.Diagnostics;
 
 namespace ManorBot.Handlers
 {
@@ -12,8 +13,8 @@ namespace ManorBot.Handlers
     {
         private readonly DiscordSocketClient _cli;
         private readonly ulong _guildId;
-
         private readonly InteractionService _interactions;
+        private readonly TaskTimer _timer;
 
         /// <summary>
         /// The constructor handles initialization of the
@@ -27,11 +28,12 @@ namespace ManorBot.Handlers
         /// <param name="guildId">the ID of the guild where the
         /// slash commands are going to be registered OR 0 if intending
         /// to register them globally instead (recommended for prod)</param>
-        public InteractionHandler(DiscordSocketClient cli, ulong guildId)
+        public InteractionHandler(TaskTimer timer, DiscordSocketClient cli, ulong guildId)
         {
             _cli = cli;
             _guildId = guildId;
             _interactions = new(_cli);
+            _timer = timer;
 
             _interactions.Log += Logger.Log;
             Task.Run(async () => await SetupAsync()); 
@@ -66,9 +68,15 @@ namespace ManorBot.Handlers
         /// </summary>
         public async Task HandleAsync(SocketInteraction interaction)
         {
+            _timer.Start();
+
             var context = new SocketInteractionContext(_cli, interaction);
             // TODO: May wanna check context properties before ExecuteCommandAsync
+            // TODO: Delegate the responsibility of actually executing the command
+            // to InfoModule
             await _interactions.ExecuteCommandAsync(context, null);
+
+            await _timer.Stop("responding to slash command");
         }
     }
 }
