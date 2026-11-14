@@ -25,7 +25,14 @@ namespace ManorBot.Handlers
         /// <returns>A task representing the asynchronous operation.</returns>
         public async Task HandleAsync(SocketMessage msg)
         {
-            if (msg is not SocketUserMessage) return;
+            if (msg is not SocketUserMessage sockUserMsg) return;
+
+            /* The bot does not need to reply to other bots.
+             * This check also consequently fixes an issue 
+             * where the bot could reply to itself, creating
+             * the risk for an infinite reply-loop, which
+             * could get the bot rate limited. */
+            if (sockUserMsg.Author.IsBot) return;
 
             timer.Start();
 

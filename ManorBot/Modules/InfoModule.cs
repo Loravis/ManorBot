@@ -1,4 +1,5 @@
-﻿using Discord.Interactions;
+﻿using Discord;
+using Discord.Interactions;
 
 namespace ManorBot.Modules
 {
@@ -7,7 +8,14 @@ namespace ManorBot.Modules
         [SlashCommand("info", "Display information about this app")]
         public async Task InfoAsync()
         {
-            await RespondAsync("Hello, World!");
+            var embed = new EmbedBuilder
+            {
+                Title = "Hello, World!",
+                Description = "This is a test.",
+                Color = Color.Blue
+            };
+            
+            await RespondAsync(embed: embed.Build());
         }
     }
 }
